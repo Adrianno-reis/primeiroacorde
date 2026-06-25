@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primeiro Acorde — Violão Gospel do Zero | Soul Violão</title>
+<meta name="description" content="Aprenda violão gospel do absoluto zero. Uma música nova toda semana, no seu ritmo, até tocar na igreja com confiança.">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --black-soft: #121212;
+    --white: #f7f5f0;
+    --gold: #BF9913;
+    --gold-bright: #E8C547;
+    --gray: #8a8a85;
+    --gray-line: #2a2a28;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Starfield texture */
+  .stars {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .stars::before, .stars::after {
+    content: '';
+    position: absolute;
+    width: 100%; height: 200%;
+    background-image:
+      radial-gradient(1px 1px at 20px 30px, white, transparent),
+      radial-gradient(1px 1px at 90px 80px, white, transparent),
+      radial-gradient(1px 1px at 160px 40px, white, transparent),
+      radial-gradient(1px 1px at 230px 120px, white, transparent),
+      radial-gradient(1px 1px at 300px 60px, white, transparent),
+      radial-gradient(1px 1px at 50px 160px, white, transparent),
+      radial-gradient(1px 1px at 130px 200px, white, transparent),
+      radial-gradient(1px 1px at 280px 180px, white, transparent),
+      radial-gradient(1px 1px at 350px 250px, white, transparent),
+      radial-gradient(1px 1px at 10px 280px, white, transparent);
+    background-repeat: repeat;
+    background-size: 380px 380px;
+    animation: drift 90s linear infinite;
+  }
+
+  @keyframes drift {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* Utility */
+  .eyebrow {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto;
+    border: none;
+  }
+
+  .divider.left { margin: 28px 0; }
+
+  .gold { color: var(--gold-bright); }
+
+  /* Buttons */
+  .btn {
+    display: inline-block;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 18px 44px;
+    border-radius: 2px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color: var(--black);
+    box-shadow: 0 4px 24px rgba(191, 153, 19, 0.25);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(191, 153, 19, 0.4);
+  }
+
+  .btn-wrap { text-align: center; margin: 36px 0; }
+
+  .btn-sub {
+    display: block;
+    margin-top: 14px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    color: var(--gray);
+    letter-spacing: 0.04em;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 28px 60px;
+  }
+
+  .hero-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-col-text { text-align: left; }
+
+  .hero-media {
+    aspect-ratio: 4/5;
+    border: 1px solid var(--gray-line);
+    border-radius: 4px;
+    background: var(--black-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-media img, .hero-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .media-placeholder {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-align: center;
+    padding: 20px;
+    border: 1px dashed var(--gray-line);
+    border-radius: 4px;
+    width: calc(100% - 24px);
+    height: calc(100% - 24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-mark {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 32px;
+  }
+
+  .hero-mark span { color: var(--gold); }
+
+  h1 {
+    font-size: clamp(40px, 8vw, 72px);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    max-width: 680px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold-bright);
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    margin-top: 28px;
+    font-size: clamp(17px, 2.4vw, 21px);
+    color: #d8d5cc;
+    max-width: 480px;
+    font-style: italic;
+  }
+
+  .hero-col-text .btn-wrap { text-align: left; margin: 36px 0 0; }
+
+  /* Two-column section (video, founder) */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  .two-col.media-left { grid-template-columns: 0.95fr 1.05fr; }
+
+  .video-frame {
+    aspect-ratio: 16/9;
+    border: 1px solid var(--gray-line);
+    border-radius: 4px;
+    background: var(--black-soft);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .video-frame iframe, .video-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+    display: block;
+  }
+
+  .founder-photo {
+    aspect-ratio: 3/4;
+    border: 1px solid var(--gray-line);
+    border-radius: 4px;
+    background: var(--black-soft);
+    overflow: hidden;
+  }
+
+  .founder-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 860px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-col-text { text-align: center; }
+    .hero-col-text .btn-wrap { text-align: center; }
+    .two-col, .two-col.media-left { grid-template-columns: 1fr; gap: 28px; }
+    .two-col.media-left .video-frame, .two-col.media-left .founder-photo { order: -1; }
+  }
+
+  .hero-tag {
+    margin-top: 44px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+
+  /* Sections */
+  section {
+    padding: 90px 0;
+    position: relative;
+  }
+
+  section.bordered {
+    border-top: 1px solid var(--gray-line);
+  }
+
+  h2 {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  p.lead {
+    font-size: 19px;
+    color: #d8d5cc;
+    max-width: 600px;
+  }
+
+  /* The string metaphor block */
+  .string-block {
+    text-align: center;
+    padding: 70px 0;
+  }
+
+  .string-block .big {
+    font-size: clamp(56px, 12vw, 110px);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--gold-bright);
+    font-style: italic;
+  }
+
+  .string-block .small {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 18px;
+  }
+
+  /* What's included */
+  .includes {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 40px;
+  }
+
+  .includes-item {
+    display: flex;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--gray-line);
+    align-items: baseline;
+  }
+
+  .includes-item:first-child { border-top: 1px solid var(--gray-line); }
+
+  .includes-mark {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--gold);
+    font-size: 13px;
+    flex-shrink: 0;
+    width: 28px;
+    padding-top: 4px;
+  }
+
+  .includes-text strong {
+    display: block;
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .includes-text span {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;
+    color: var(--gray);
+    font-style: normal;
+  }
+
+  /* Founder section */
+  .founder {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .founder-name {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    font-size: 15px;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+  }
+
+  .founder p {
+    color: #d8d5cc;
+    font-size: 17px;
+    max-width: 600px;
+  }
+
+  .founder-quote {
+    font-style: italic;
+    font-size: 21px;
+    color: var(--white);
+    border-left: 2px solid var(--gold);
+    padding-left: 24px;
+    margin: 8px 0;
+  }
+
+  /* Modules */
+  .modules {
+    margin-top: 40px;
+  }
+
+  .module {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 24px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--gray-line);
+  }
+
+  .module:first-child { border-top: 1px solid var(--gray-line); }
+
+  .module-num {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    padding-top: 6px;
+  }
+
+  .module-num b {
+    display: block;
+    font-size: 28px;
+    color: var(--gold);
+    font-family: Georgia, serif;
+    font-weight: 400;
+  }
+
+  .module-title {
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .module-desc {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  /* Price block */
+  .price-block {
+    text-align: center;
+    background: var(--black-soft);
+    border: 1px solid var(--gray-line);
+    border-radius: 4px;
+    padding: 56px 32px;
+    margin-top: 40px;
+  }
+
+  .price-tag {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 13px;
+    color: var(--gray);
+  }
+
+  .price-value {
+    font-size: clamp(48px, 10vw, 72px);
+    color: var(--gold-bright);
+    margin: 12px 0;
+    font-style: italic;
+  }
+
+  .price-period {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    color: var(--gray);
+  }
+
+  .guarantee-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    color: var(--gray);
+  }
+
+  .guarantee-row span { color: var(--gold); margin-right: 6px; }
+
+  /* FAQ */
+  .faq-item {
+    border-bottom: 1px solid var(--gray-line);
+    padding: 26px 0;
+  }
+
+  .faq-item:first-child { border-top: 1px solid var(--gray-line); }
+
+  .faq-q {
+    font-size: 18px;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+  }
+
+  .faq-q::after {
+    content: '+';
+    color: var(--gold);
+    font-size: 22px;
+    font-weight: 300;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+
+  .faq-a {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.7;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding-top 0.3s ease;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    padding-top: 16px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 60px 0 40px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    color: var(--gray);
+  }
+
+  footer .gold-line { color: var(--gold); margin-bottom: 8px; font-size: 13px; letter-spacing: 0.05em; }
+
+  /* Sticky CTA mobile */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(10,10,10,0.97);
+    border-top: 1px solid var(--gray-line);
+    padding: 14px 20px;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    backdrop-filter: blur(6px);
+  }
+
+  .sticky-cta span {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--white);
+    font-size: 14px;
+  }
+
+  .sticky-cta .btn { padding: 12px 24px; font-size: 13px; }
+
+  @media (max-width: 640px) {
+    section { padding: 64px 0; }
+    .hero { min-height: 86vh; padding-top: 80px; }
+    .module { grid-template-columns: 44px 1fr; gap: 16px; }
+    .module-num b { font-size: 22px; }
+    .sticky-cta { display: flex; }
+    body { padding-bottom: 70px; }
+    .guarantee-row { gap: 18px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stars::before, .stars::after { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-col-text">
+      <div class="hero-mark"><span>Soul Violão</span> &nbsp;·&nbsp; Primeiro Acorde</div>
+      <h1>Todo mundo que toca na igreja<br>teve um <em>primeiro acorde.</em></h1>
+      <p class="hero-sub">Esse é o seu. Violão gospel do absoluto zero, uma música nova toda semana, no seu ritmo — até você tocar na igreja com confiança.</p>
+      <div class="btn-wrap">
+        <a href="https://pay.hotmart.com/J105557660W?bid=1782410803045" class="btn btn-primary">Assinar agora</a>
+        <span class="btn-sub">R$ 24,90/mês · cancele quando quiser</span>
+      </div>
+    </div>
+    <div class="hero-media">
+      <!-- Troque por: <img src="sua-foto.jpg" alt="Adrianno tocando violão"> -->
+      <div class="media-placeholder">Espaço para imagem<br>(capa ou foto sua tocando)</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <!-- THE PROMISE -->
+  <section class="string-block bordered">
+    <div class="big">Você não precisa<br>de experiência.</div>
+    <div class="small">Só precisa querer começar</div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="bordered">
+    <span class="eyebrow">Assista antes de começar</span>
+    <h2>O que você vai aprender aqui?</h2>
+    <div class="two-col">
+      <div class="video-frame">
+        <!-- Troque por: <iframe src="https://www.youtube.com/embed/SEU_VIDEO_ID" allowfullscreen></iframe> -->
+        <div class="media-placeholder">Espaço para o vídeo do YouTube</div>
+      </div>
+      <div>
+        <p class="lead">São músicas gospel ensinadas do zero, com aula em vídeo e cifra liberada toda semana. Sem pestana complicada, sem pré-requisito. Você começa do absoluto início e vai construindo repertório pra tocar na igreja, na célula ou em casa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IT IS -->
+  <section>
+    <span class="eyebrow">Como funciona</span>
+    <h2>Uma música nova toda semana, do começo ao fim.</h2>
+    <p class="lead">Você entra, e o acesso já começa pela preparação — tudo que precisa saber antes de pegar no violão. Depois disso, toda semana uma música nova é liberada para você aprender, no seu tempo.</p>
+
+    <div class="includes">
+      <div class="includes-item">
+        <div class="includes-mark">01</div>
+        <div class="includes-text">
+          <strong>Módulo de preparação completo</strong>
+          <span>Como o violão funciona, primeiros acordes, primeiro ritmo — liberado assim que você entra</span>
+        </div>
+      </div>
+      <div class="includes-item">
+        <div class="includes-mark">02</div>
+        <div class="includes-text">
+          <strong>Vídeo de referência por música</strong>
+          <span>Ouça e veja como ela soa antes de aprender a tocar</span>
+        </div>
+      </div>
+      <div class="includes-item">
+        <div class="includes-mark">03</div>
+        <div class="includes-text">
+          <strong>Aula completa por música</strong>
+          <span>Acorde por acorde, do início ao fim, sem pressa e sem enrolação</span>
+        </div>
+      </div>
+      <div class="includes-item">
+        <div class="includes-mark">04</div>
+        <div class="includes-text">
+          <strong>Banco de músicas crescendo</strong>
+          <span>Toda semana uma nova música é adicionada ao seu acesso</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section class="bordered">
+    <span class="eyebrow">A jornada</span>
+    <h2>Como o conteúdo está organizado</h2>
+
+    <div class="modules">
+      <div class="module">
+        <div class="module-num"><b>01</b>Módulo</div>
+        <div>
+          <div class="module-title">Boas-vindas</div>
+          <div class="module-desc">Quem eu sou, por que criei o Primeiro Acorde, e o que você vai conquistar ao longo da jornada.</div>
+        </div>
+      </div>
+      <div class="module">
+        <div class="module-num"><b>02</b>Módulo</div>
+        <div>
+          <div class="module-title">Preparação</div>
+          <div class="module-desc">O que você precisa pra começar, como segurar o violão, postura, as 6 cordas, afinação e como estudar com frequência — feito é melhor que perfeito.</div>
+        </div>
+      </div>
+      <div class="module">
+        <div class="module-num"><b>03+</b>Módulo</div>
+        <div>
+          <div class="module-title">Suas músicas, semana após semana</div>
+          <div class="module-desc">Para cada música: o vídeo de referência e a aula completa ensinando a tocar do zero. Sem fim, sem trilha fixa — você avança no seu ritmo.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section>
+    <span class="eyebrow">Quem está do outro lado da tela</span>
+    <h2>Adrianno Santos</h2>
+    <div class="two-col">
+      <div class="founder">
+        <p>Toco violão há mais de 20 anos. Comecei aos 15, por insistência da minha mãe — e foi a melhor coisa que alguém já fez por mim. O violão me levou direto pro louvor da igreja, onde toco até hoje.</p>
+        <p class="founder-quote">Eu sei o que é olhar pro lugar onde você queria estar e não saber por onde começar. O Primeiro Acorde existe pra encurtar essa distância.</p>
+        <p>Não é curso de violão. É o ponto de partida de quem quer tocar com propósito — em casa, na célula, ou no domingo, na igreja.</p>
+      </div>
+      <div class="founder-photo">
+        <!-- Troque por: <img src="sua-foto.jpg" alt="Adrianno Santos"> -->
+        <div class="media-placeholder">Espaço para sua foto</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICE -->
+  <section class="bordered" id="preco">
+    <span class="eyebrow">Investimento</span>
+    <h2>O primeiro acorde custa menos<br>que parece.</h2>
+
+    <div class="price-block">
+      <div class="price-tag">Assinatura mensal</div>
+      <div class="price-value">R$ 24,90</div>
+      <div class="price-period">por mês · cancele quando quiser, sem multa</div>
+
+      <div class="btn-wrap">
+        <a href="https://pay.hotmart.com/J105557660W?bid=1782410803045" class="btn btn-primary">Quero meu primeiro acorde</a>
+      </div>
+
+      <div class="guarantee-row">
+        <div><span>✓</span>Acesso imediato</div>
+        <div><span>✓</span>Compra 100% segura</div>
+        <div><span>✓</span>7 dias de garantia</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <span class="eyebrow">Perguntas frequentes</span>
+    <h2>Antes de você começar</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Eu nunca toquei nada. Serve para mim?</div>
+        <div class="faq-a">Sim — o Primeiro Acorde foi feito exatamente para quem nunca tocou. O módulo de preparação cobre tudo desde como segurar o violão até afinar, antes de qualquer música.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Quanto tempo até eu conseguir tocar uma música inteira?</div>
+        <div class="faq-a">Depende do seu ritmo de prática, mas a maioria consegue tocar a primeira música completa já nas primeiras semanas, dedicando um pouco de tempo por dia.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como funciona o prazo de garantia?</div>
+        <div class="faq-a">Você tem 7 dias a partir da assinatura para testar. Se não for pra você, basta solicitar o reembolso — sem perguntas, sem burocracia.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Posso cancelar quando quiser?</div>
+        <div class="faq-a">Sim. É uma assinatura mensal sem contrato de fidelidade — cancela direto no Hotmart quando quiser, sem multa.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como vou acessar o conteúdo?</div>
+        <div class="faq-a">Pelo computador, celular ou tablet, direto na área de membros. Você recebe o acesso por e-mail logo após a confirmação do pagamento.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="btn-wrap" style="padding-bottom: 40px;">
+    <a href="https://pay.hotmart.com/J105557660W?bid=1782410803045" class="btn btn-primary">Assinar agora</a>
+    <span class="btn-sub">R$ 24,90/mês · cancele quando quiser</span>
+  </div>
+
+</div>
+
+<footer>
+  <div class="gold-line">Soul Violão</div>
+  <div>Primeiro Acorde — violão gospel do zero</div>
+  <div style="margin-top: 16px;">© Todos os direitos reservados</div>
+</footer>
+
+<div class="sticky-cta">
+  <span>R$ 24,90/mês</span>
+  <a href="https://pay.hotmart.com/J105557660W?bid=1782410803045" class="btn btn-primary">Assinar</a>
+</div>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
